@@ -1,0 +1,857 @@
+diff --git a/README.md b/README.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..3bafd7c92a5616df040706146a2aca68ce42e22b
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1,42 @@
++# Plano 7D Care (Tema WordPress para Elementor)
++
++Pacote de tema pronto para upload no WordPress, com estética premium inspirada em:
++- minimalismo sofisticado (vidro, tipografia limpa, alto respiro visual)
++- atmosfera cinematográfica (fundo escuro, contraste forte, destaque em cards)
++
++> O foco é **estilo visual inspirado**, sem copiar marcas, assets proprietários ou componentes protegidos.
++
++## O que já vem pronto
++
++- Tema WordPress completo e instalável.
++- Layout inicial da home (`front-page.php`) com conteúdo base do Plano 7D.
++- Design system no `theme.json` (cores, tipografia, dimensões).
++- CSS e microinterações prontas em `assets/css/theme.css` e `assets/js/theme.js`.
++- Wireframe JSON base para importação no Elementor (`elementor-kit/plano-7d-wireframe.json`).
++
++## Como instalar
++
++1. Compacte a pasta do tema em `.zip` (o nome da pasta pode ser `plano-7d-care`).
++2. No WordPress, vá em **Aparência > Temas > Adicionar novo > Enviar tema**.
++3. Envie o `.zip` e ative.
++4. Instale e ative o plugin **Elementor**.
++5. Em **Páginas > Página inicial**, edite com Elementor e personalize textos/imagens.
++6. (Opcional) Importe o wireframe em **Modelos > Importar Modelos**.
++
++## Estrutura de conteúdo recomendada para o Plano 7D
++
++- Hero com promessa principal.
++- Seção “7 dimensões” (cards por módulo).
++- Depoimentos.
++- Oferta/inscrição.
++- FAQ.
++- Rodapé com contatos e política de privacidade.
++
++## Checklist de publicação
++
++- [ ] Ajustar logo e favicon
++- [ ] Substituir imagem do hero por foto autoral
++- [ ] Validar LGPD (cookies e políticas)
++- [ ] Configurar SMTP/formulário de inscrição
++- [ ] Testar mobile e performance
++
+diff --git a/assets/css/theme.css b/assets/css/theme.css
+new file mode 100644
+index 0000000000000000000000000000000000000000..38fa4ee25b869618b07a1503eac2077da8c49df0
+--- /dev/null
++++ b/assets/css/theme.css
+@@ -0,0 +1,214 @@
++:root {
++  --plano7d-bg: #0a0a0d;
++  --plano7d-surface: #15161a;
++  --plano7d-surface-alt: #1c1d24;
++  --plano7d-text: #f5f5f7;
++  --plano7d-muted: #c5c5d0;
++  --plano7d-accent: #e50914;
++  --plano7d-accent-secondary: #5ac8fa;
++  --plano7d-radius: 18px;
++  --plano7d-radius-pill: 999px;
++  --plano7d-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
++}
++
++* {
++  box-sizing: border-box;
++}
++
++body.plano7d-premium {
++  margin: 0;
++  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
++  color: var(--plano7d-text);
++  background: radial-gradient(circle at 20% -20%, #262a34 0%, var(--plano7d-bg) 50%);
++}
++
++.plano7d-container {
++  width: min(1180px, 92vw);
++  margin: 0 auto;
++}
++
++.plano7d-site-header {
++  position: sticky;
++  top: 0;
++  z-index: 100;
++  backdrop-filter: blur(16px);
++  background: rgba(10, 10, 13, 0.65);
++  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
++}
++
++.plano7d-header-inner {
++  display: flex;
++  gap: 1.5rem;
++  align-items: center;
++  justify-content: space-between;
++  min-height: 74px;
++}
++
++.plano7d-logo {
++  color: var(--plano7d-text);
++  font-weight: 700;
++  text-decoration: none;
++}
++
++.plano7d-main-nav .plano7d-menu {
++  display: flex;
++  gap: 1rem;
++  list-style: none;
++  margin: 0;
++  padding: 0;
++}
++
++.plano7d-main-nav .plano7d-menu a {
++  color: var(--plano7d-muted);
++  text-decoration: none;
++  font-size: 0.95rem;
++}
++
++.plano7d-cta,
++.plano7d-button {
++  display: inline-flex;
++  align-items: center;
++  justify-content: center;
++  border-radius: var(--plano7d-radius-pill);
++  text-decoration: none;
++  transition: transform 0.2s ease, opacity 0.2s ease;
++}
++
++.plano7d-cta {
++  background: linear-gradient(130deg, var(--plano7d-accent) 0%, #ff4d4d 100%);
++  color: #fff;
++  padding: 0.7rem 1.2rem;
++  font-weight: 600;
++}
++
++.plano7d-cta:hover,
++.plano7d-button:hover {
++  transform: translateY(-1px);
++  opacity: 0.92;
++}
++
++.plano7d-hero {
++  position: relative;
++  min-height: 72vh;
++  display: grid;
++  place-items: center;
++  background: linear-gradient(140deg, rgba(8, 8, 11, 0.88), rgba(8, 8, 11, 0.35)),
++    url('https://images.unsplash.com/photo-1516589091380-5d601fa7a5f4?auto=format&fit=crop&w=1400&q=80') center/cover;
++}
++
++.plano7d-overlay {
++  position: absolute;
++  inset: 0;
++  background: linear-gradient(to top, rgba(10, 10, 13, 0.95), rgba(10, 10, 13, 0.35));
++}
++
++.plano7d-hero-inner {
++  position: relative;
++  z-index: 1;
++  text-align: left;
++  padding: 5rem 0;
++}
++
++.plano7d-kicker {
++  display: inline-block;
++  padding: 0.35rem 0.8rem;
++  border-radius: var(--plano7d-radius-pill);
++  border: 1px solid rgba(255, 255, 255, 0.2);
++  font-size: 0.82rem;
++  letter-spacing: 0.04em;
++  text-transform: uppercase;
++}
++
++.plano7d-hero h1 {
++  font-size: clamp(2rem, 6vw, 4rem);
++  margin: 1rem 0;
++  line-height: 1.08;
++  max-width: 14ch;
++}
++
++.plano7d-hero p {
++  max-width: 60ch;
++  color: var(--plano7d-muted);
++}
++
++.plano7d-actions {
++  display: flex;
++  flex-wrap: wrap;
++  gap: 0.8rem;
++  margin-top: 1.6rem;
++}
++
++.plano7d-button {
++  padding: 0.85rem 1.25rem;
++  font-weight: 600;
++}
++
++.plano7d-button-primary {
++  color: #fff;
++  background: var(--plano7d-accent);
++}
++
++.plano7d-button-ghost {
++  color: var(--plano7d-text);
++  border: 1px solid rgba(255, 255, 255, 0.22);
++}
++
++.plano7d-section {
++  padding: clamp(3rem, 7vw, 5rem) 0;
++}
++
++.plano7d-section h2 {
++  font-size: clamp(1.5rem, 4vw, 2.4rem);
++  margin: 0 0 1.5rem;
++}
++
++.plano7d-grid {
++  display: grid;
++  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
++  gap: 1rem;
++}
++
++.plano7d-card {
++  background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
++  border: 1px solid rgba(255, 255, 255, 0.08);
++  border-radius: var(--plano7d-radius);
++  box-shadow: var(--plano7d-shadow);
++  padding: 1.2rem;
++}
++
++.plano7d-module-card {
++  min-height: 180px;
++}
++
++.plano7d-card p,
++.plano7d-card blockquote,
++.plano7d-content {
++  color: var(--plano7d-muted);
++}
++
++.plano7d-section-dark {
++  background: #070709;
++}
++
++.plano7d-site-footer {
++  border-top: 1px solid rgba(255, 255, 255, 0.08);
++  padding: 2rem 0;
++}
++
++.plano7d-footer-menu {
++  list-style: none;
++  display: flex;
++  gap: 1rem;
++  padding: 0;
++}
++
++.plano7d-footer-menu a {
++  color: var(--plano7d-muted);
++  text-decoration: none;
++}
++
++@media (max-width: 820px) {
++  .plano7d-main-nav {
++    display: none;
++  }
++}
+diff --git a/assets/js/theme.js b/assets/js/theme.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..62a1c87a699f533e5a6a07d3cd470ea4918310d7
+--- /dev/null
++++ b/assets/js/theme.js
+@@ -0,0 +1,16 @@
++(() => {
++  const cards = document.querySelectorAll('.plano7d-card');
++
++  cards.forEach((card) => {
++    card.addEventListener('mousemove', (event) => {
++      const rect = card.getBoundingClientRect();
++      const x = ((event.clientX - rect.left) / rect.width) * 100;
++      const y = ((event.clientY - rect.top) / rect.height) * 100;
++      card.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(90, 200, 250, 0.22), rgba(255,255,255,0.04) 40%, rgba(255,255,255,0.02) 80%)`;
++    });
++
++    card.addEventListener('mouseleave', () => {
++      card.style.background = 'linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02))';
++    });
++  });
++})();
+diff --git a/dist/plano-7d-care.zip b/dist/plano-7d-care.zip
+new file mode 100644
+index 0000000000000000000000000000000000000000..cddf363d0b66c4d9a2e707c3f0ba6fedeebaaabd
+GIT binary patch
+literal 10006
+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
+
+literal 0
+HcmV?d00001
+
+diff --git a/elementor-kit/plano-7d-wireframe.json b/elementor-kit/plano-7d-wireframe.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..a1981aaff745d46badce372b4ae56cc75b147025
+--- /dev/null
++++ b/elementor-kit/plano-7d-wireframe.json
+@@ -0,0 +1,35 @@
++{
++  "title": "Plano 7D - Estrutura de Landing (wireframe)",
++  "type": "page",
++  "version": "0.4",
++  "content": [
++    {
++      "id": "hero",
++      "elType": "section",
++      "settings": {
++        "layout": "full_width",
++        "padding": {"unit": "px", "top": "120", "right": "0", "bottom": "120", "left": "0"},
++        "background_background": "gradient"
++      },
++      "elements": []
++    },
++    {
++      "id": "modulos",
++      "elType": "section",
++      "settings": {
++        "layout": "boxed",
++        "padding": {"unit": "px", "top": "70", "right": "0", "bottom": "70", "left": "0"}
++      },
++      "elements": []
++    },
++    {
++      "id": "depoimentos",
++      "elType": "section",
++      "settings": {
++        "layout": "boxed",
++        "padding": {"unit": "px", "top": "70", "right": "0", "bottom": "70", "left": "0"}
++      },
++      "elements": []
++    }
++  ]
++}
+diff --git a/footer.php b/footer.php
+new file mode 100644
+index 0000000000000000000000000000000000000000..0b619391f9479cb87fe4d7dffc612f05b2f342b0
+--- /dev/null
++++ b/footer.php
+@@ -0,0 +1,28 @@
++<?php
++/**
++ * Rodapé do tema.
++ *
++ * @package Plano7DCare
++ */
++
++if (! defined('ABSPATH')) {
++    exit;
++}
++?>
++</main>
++<footer class="plano7d-site-footer">
++    <div class="plano7d-container">
++        <p><?php echo esc_html(date_i18n('Y')); ?> · <?php bloginfo('name'); ?> · <?php esc_html_e('Plano 7D para cuidadores de idosos', 'plano-7d-care'); ?></p>
++        <?php
++        wp_nav_menu([
++            'theme_location' => 'footer',
++            'menu_class'     => 'plano7d-footer-menu',
++            'container'      => 'nav',
++            'fallback_cb'    => false,
++        ]);
++        ?>
++    </div>
++</footer>
++<?php wp_footer(); ?>
++</body>
++</html>
+diff --git a/front-page.php b/front-page.php
+new file mode 100644
+index 0000000000000000000000000000000000000000..638d803898b0373a2a9ebceeda4c50a7632f3cc4
+--- /dev/null
++++ b/front-page.php
+@@ -0,0 +1,66 @@
++<?php
++/**
++ * Front-page padrão do Plano 7D.
++ *
++ * @package Plano7DCare
++ */
++
++get_header();
++?>
++<section class="plano7d-hero">
++    <div class="plano7d-overlay"></div>
++    <div class="plano7d-container plano7d-hero-inner">
++        <span class="plano7d-kicker"><?php esc_html_e('Plano 7D para cuidadores de idosos', 'plano-7d-care'); ?></span>
++        <h1><?php esc_html_e('Cuidar sem culpa, com método e acolhimento.', 'plano-7d-care'); ?></h1>
++        <p><?php esc_html_e('Uma jornada em 7 dimensões para quem cuida de idosos e precisa de equilíbrio emocional, organização da rotina e suporte profissional.', 'plano-7d-care'); ?></p>
++        <div class="plano7d-actions" id="inscricao">
++            <a class="plano7d-button plano7d-button-primary" href="#modulos"><?php esc_html_e('Ver os 7 módulos', 'plano-7d-care'); ?></a>
++            <a class="plano7d-button plano7d-button-ghost" href="#depoimentos"><?php esc_html_e('Ler depoimentos', 'plano-7d-care'); ?></a>
++        </div>
++    </div>
++</section>
++
++<section id="modulos" class="plano7d-section">
++    <div class="plano7d-container">
++        <h2><?php esc_html_e('Estrutura do Plano 7D', 'plano-7d-care'); ?></h2>
++        <div class="plano7d-grid">
++            <?php
++            $modulos = [
++                'Direção do cuidado',
++                'Disciplina da rotina',
++                'Descompressão emocional',
++                'Diálogo com a família',
++                'Documentação e legalidade',
++                'Desenvolvimento profissional',
++                'Descanso e autocuidado',
++            ];
++
++            foreach ($modulos as $modulo) :
++                ?>
++                <article class="plano7d-card plano7d-module-card">
++                    <h3><?php echo esc_html($modulo); ?></h3>
++                    <p><?php esc_html_e('Conteúdo prático para aplicar já na sua rotina de cuidador(a).', 'plano-7d-care'); ?></p>
++                </article>
++            <?php endforeach; ?>
++        </div>
++    </div>
++</section>
++
++<section id="depoimentos" class="plano7d-section plano7d-section-dark">
++    <div class="plano7d-container">
++        <h2><?php esc_html_e('Histórias reais de transformação', 'plano-7d-care'); ?></h2>
++        <div class="plano7d-grid">
++            <blockquote class="plano7d-card">
++                “Antes eu me sentia sozinha e exausta. Hoje consigo cuidar da minha mãe sem me perder de mim.”
++            </blockquote>
++            <blockquote class="plano7d-card">
++                “O método me ajudou a organizar minha rotina e conversar melhor com meus irmãos sobre os cuidados.”
++            </blockquote>
++            <blockquote class="plano7d-card">
++                “Passei a ter clareza sobre limites e autocuidado. Isso mudou minha saúde emocional.”
++            </blockquote>
++        </div>
++    </div>
++</section>
++<?php
++get_footer();
+diff --git a/functions.php b/functions.php
+new file mode 100644
+index 0000000000000000000000000000000000000000..2658653263d69a73760ec15f7eb4bca10dd350d3
+--- /dev/null
++++ b/functions.php
+@@ -0,0 +1,91 @@
++<?php
++/**
++ * Funções do tema Plano 7D Care.
++ *
++ * @package Plano7DCare
++ */
++
++if (! defined('ABSPATH')) {
++    exit;
++}
++
++/**
++ * Setup do tema.
++ */
++function plano7d_setup(): void
++{
++    add_theme_support('title-tag');
++    add_theme_support('post-thumbnails');
++    add_theme_support('html5', ['search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script']);
++    add_theme_support('custom-logo', [
++        'height'      => 80,
++        'width'       => 280,
++        'flex-height' => true,
++        'flex-width'  => true,
++    ]);
++    add_theme_support('editor-styles');
++    add_editor_style('assets/css/theme.css');
++
++    register_nav_menus([
++        'primary' => __('Menu Principal', 'plano-7d-care'),
++        'footer'  => __('Menu Rodapé', 'plano-7d-care'),
++    ]);
++}
++add_action('after_setup_theme', 'plano7d_setup');
++
++/**
++ * Enfileira assets.
++ */
++function plano7d_enqueue_assets(): void
++{
++    $theme = wp_get_theme();
++
++    wp_enqueue_style(
++        'plano7d-google-fonts',
++        'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap',
++        [],
++        null
++    );
++
++    wp_enqueue_style(
++        'plano7d-theme',
++        get_theme_file_uri('assets/css/theme.css'),
++        ['plano7d-google-fonts'],
++        $theme->get('Version')
++    );
++
++    wp_enqueue_script(
++        'plano7d-theme',
++        get_theme_file_uri('assets/js/theme.js'),
++        [],
++        $theme->get('Version'),
++        true
++    );
++}
++add_action('wp_enqueue_scripts', 'plano7d_enqueue_assets');
++
++/**
++ * Body classes utilitárias.
++ */
++function plano7d_body_classes(array $classes): array
++{
++    $classes[] = 'plano7d-premium';
++
++    if (is_front_page()) {
++        $classes[] = 'plano7d-front';
++    }
++
++    return $classes;
++}
++add_filter('body_class', 'plano7d_body_classes');
++
++/**
++ * Mensagem no admin para orientar uso com Elementor.
++ */
++function plano7d_admin_notice_elementor(): void
++{
++    if (current_user_can('activate_plugins') && ! did_action('elementor/loaded')) {
++        echo '<div class="notice notice-warning"><p>' . esc_html__('Plano 7D Care funciona melhor com Elementor ativado.', 'plano-7d-care') . '</p></div>';
++    }
++}
++add_action('admin_notices', 'plano7d_admin_notice_elementor');
+diff --git a/header.php b/header.php
+new file mode 100644
+index 0000000000000000000000000000000000000000..a836559b07997d29f3097113f5e67a2afdd4fd1e
+--- /dev/null
++++ b/header.php
+@@ -0,0 +1,45 @@
++<?php
++/**
++ * Cabeçalho do tema.
++ *
++ * @package Plano7DCare
++ */
++
++if (! defined('ABSPATH')) {
++    exit;
++}
++?><!doctype html>
++<html <?php language_attributes(); ?>>
++<head>
++    <meta charset="<?php bloginfo('charset'); ?>">
++    <meta name="viewport" content="width=device-width, initial-scale=1">
++    <?php wp_head(); ?>
++</head>
++<body <?php body_class(); ?>>
++<?php wp_body_open(); ?>
++<header class="plano7d-site-header">
++    <div class="plano7d-container plano7d-header-inner">
++        <a class="plano7d-logo" href="<?php echo esc_url(home_url('/')); ?>" aria-label="<?php esc_attr_e('Página inicial', 'plano-7d-care'); ?>">
++            <?php
++            if (has_custom_logo()) {
++                the_custom_logo();
++            } else {
++                bloginfo('name');
++            }
++            ?>
++        </a>
++
++        <?php
++        wp_nav_menu([
++            'theme_location' => 'primary',
++            'menu_class'     => 'plano7d-menu',
++            'container'      => 'nav',
++            'container_class'=> 'plano7d-main-nav',
++            'fallback_cb'    => false,
++        ]);
++        ?>
++
++        <a class="plano7d-cta" href="#inscricao"><?php esc_html_e('Quero entrar no Plano 7D', 'plano-7d-care'); ?></a>
++    </div>
++</header>
++<main id="content" class="plano7d-site-main">
+diff --git a/index.php b/index.php
+new file mode 100644
+index 0000000000000000000000000000000000000000..2e0a14b181b07ab8742f6f9f4a6552c3ba259d04
+--- /dev/null
++++ b/index.php
+@@ -0,0 +1,28 @@
++<?php
++/**
++ * Arquivo fallback do tema.
++ *
++ * @package Plano7DCare
++ */
++
++get_header();
++?>
++<section class="plano7d-section">
++    <div class="plano7d-container">
++        <?php if (have_posts()) : ?>
++            <?php while (have_posts()) : the_post(); ?>
++                <article <?php post_class('plano7d-card'); ?> id="post-<?php the_ID(); ?>">
++                    <h1 class="plano7d-title"><?php the_title(); ?></h1>
++                    <div class="plano7d-content"><?php the_content(); ?></div>
++                </article>
++            <?php endwhile; ?>
++        <?php else : ?>
++            <article class="plano7d-card">
++                <h1 class="plano7d-title"><?php esc_html_e('Seu novo tema está ativo.', 'plano-7d-care'); ?></h1>
++                <p><?php esc_html_e('Edite esta página com Elementor para montar o conteúdo do Plano 7D.', 'plano-7d-care'); ?></p>
++            </article>
++        <?php endif; ?>
++    </div>
++</section>
++<?php
++get_footer();
+diff --git a/style.css b/style.css
+new file mode 100644
+index 0000000000000000000000000000000000000000..0dc5d9d43ee58da2db207914feb12fde5c9b331b
+--- /dev/null
++++ b/style.css
+@@ -0,0 +1,17 @@
++/*
++Theme Name: Plano 7D Care
++Theme URI: https://example.com/plano-7d-care
++Author: Equipe Plano 7D
++Author URI: https://example.com
++Description: Tema WordPress pronto para Elementor, com estética premium inspirada em interfaces cinematográficas e minimalistas para o Plano 7D de cuidadores de idosos.
++Version: 1.0.0
++Requires at least: 6.4
++Tested up to: 6.5
++Requires PHP: 8.0
++License: GNU General Public License v2 or later
++License URI: http://www.gnu.org/licenses/gpl-2.0.html
++Text Domain: plano-7d-care
++Tags: custom-background, custom-logo, custom-menu, featured-images, full-site-editing, elementor
++*/
++
++/* Folha principal intencionalmente leve. Estilos principais em assets/css/theme.css */
+diff --git a/theme.json b/theme.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..d19431c430cb78b523447e75bc608065655f17e7
+--- /dev/null
++++ b/theme.json
+@@ -0,0 +1,47 @@
++{
++  "$schema": "https://schemas.wp.org/trunk/theme.json",
++  "version": 2,
++  "settings": {
++    "appearanceTools": true,
++    "color": {
++      "palette": [
++        { "name": "Noite", "slug": "night", "color": "#0a0a0d" },
++        { "name": "Grafite", "slug": "graphite", "color": "#15161a" },
++        { "name": "Branco Neve", "slug": "snow", "color": "#f5f5f7" },
++        { "name": "Azul Vidro", "slug": "glass-blue", "color": "#5ac8fa" },
++        { "name": "Vermelho Energia", "slug": "energy-red", "color": "#e50914" }
++      ]
++    },
++    "typography": {
++      "fontFamilies": [
++        {
++          "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
++          "name": "Inter System",
++          "slug": "inter-system"
++        }
++      ],
++      "fluid": true
++    },
++    "layout": {
++      "contentSize": "780px",
++      "wideSize": "1200px"
++    }
++  },
++  "styles": {
++    "typography": {
++      "fontFamily": "var(--wp--preset--font-family--inter-system)",
++      "lineHeight": 1.5
++    },
++    "color": {
++      "background": "#0a0a0d",
++      "text": "#f5f5f7"
++    },
++    "elements": {
++      "button": {
++        "border": {
++          "radius": "999px"
++        }
++      }
++    }
++  }
++}
